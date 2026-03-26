@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: Usuário digita uma nota e clica em "submit"
+
+    browser->>browser: Captura evento do formulário
+    browser->>browser: preventDefault()
+    browser->>browser: Cria objeto da nota (content + date)
+
+    browser->>browser: Atualiza UI imediatamente (render otimista)
+
+    browser->>server: POST /new_note_spa (JSON)
+    activate server
+    server->>server: Salva nova nota
+    server-->>browser: 201 Created (ou confirmação)
+    deactivate server
+
+    Note right of browser: Nenhum reload ocorre (SPA)
